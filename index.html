@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Michael Stolyarov</title>
+<meta name="description" content="Michael Stolyarov — Computer Science and Mathematics student looking for SOC analyst, detection engineering and software development roles. C#, Wazuh, Sysmon, application security.">
+<meta name="theme-color" content="#161a23">
+<meta property="og:title" content="Michael Stolyarov">
+<meta property="og:description" content="Open to SOC analyst, detection engineering and software development roles.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%A1%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #161a23;
+    --bg-panel: #1b202b;
+    --bg-panel-raised: #1f2532;
+    --accent: #d9a441;
+    --accent-dim: #a9863f;
+    --steel: #7c93b8;
+    --text-primary: #e9e6df;
+    --text-secondary: #99a2b5;
+    --text-muted: #626b7d;
+    --border: rgba(233, 230, 223, 0.12);
+    --border-strong: rgba(233, 230, 223, 0.24);
+    --success: #7fb88f;
+    --glow-accent: rgba(217, 164, 65, 0.2);
+    --glow-success: rgba(127, 184, 143, 0.3);
+    --font-display: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0px,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.14) 3px
+    );
+    mix-blend-mode: overlay;
+    opacity: 0.3;
+  }
+
+  #netbg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .topbar, .hero, main, footer { position: relative; z-index: 1; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  }
+
+  a { color: var(--steel); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .topbar { border-bottom: 1px solid var(--border); }
+  .topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+  .topbar-inner span.dot { color: var(--success); }
+  .topbar nav { display: flex; gap: 22px; }
+  .topbar nav a { color: var(--text-secondary); text-decoration: none; }
+  .topbar nav a:hover { color: var(--accent); }
+
+  .hero { padding: 64px 0 64px; border-bottom: 1px solid var(--border); }
+
+  .terminal {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 0 24px 60px -30px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-panel-raised);
+  }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.r { background: #e2645c; }
+  .terminal-dot.y { background: #e0ab4f; }
+  .terminal-dot.g { background: #6ec27b; }
+  .terminal-title {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin: 0 auto;
+  }
+  .terminal-body { padding: 30px 28px 32px; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+    text-shadow: 0 0 14px var(--glow-accent);
+  }
+  h1.name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 42px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+
+  .role-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin: 0 0 26px;
+    min-height: 22px;
+  }
+  .role-line .prompt { color: var(--success); text-shadow: 0 0 10px var(--glow-success); }
+  .role-line #roleText { color: var(--accent); text-shadow: 0 0 12px var(--glow-accent); }
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--glow-accent);
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+  .tagline {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 58ch;
+    margin: 0 0 28px;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--success);
+    border: 1px solid var(--border-strong);
+    background: var(--bg-panel-raised);
+    padding: 7px 14px;
+    border-radius: 3px;
+    margin-bottom: 34px;
+  }
+  .status-pill::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 8px var(--glow-success);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-decoration: none;
+    padding: 11px 18px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary { background: var(--accent); color: #23180a; font-weight: 500; }
+  .btn-primary:hover { background: #e7b455; }
+  .btn-ghost { border: 1px solid var(--border-strong); color: var(--text-primary); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 14px var(--glow-accent); }
+
+  .record {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 32px;
+    padding: 52px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .record-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0;
+    padding-top: 2px;
+  }
+  .record h2 {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .bio { max-width: 62ch; color: var(--text-secondary); font-size: 16px; }
+  .bio strong { color: var(--text-primary); font-weight: 500; }
+
+  .skill-group { margin-bottom: 26px; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-group-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--steel);
+    margin: 0 0 12px;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-strong);
+    border-radius: 3px;
+    padding: 5px 10px;
+  }
+
+  .featured-link {
+    display: inline-block;
+    margin: 0 0 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+  }
+  .featured-link:hover { border-color: var(--accent); }
+
+  .project-list { display: flex; flex-direction: column; gap: 18px; }
+  .project {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px 24px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .project:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 0 0 1px rgba(217, 164, 65, 0.08), 0 0 24px -8px var(--glow-accent);
+  }
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .cat-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    border-radius: 3px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+  .project ul {
+    margin: 0 0 16px;
+    padding-left: 18px;
+    color: var(--text-secondary);
+    font-size: 14.5px;
+  }
+  .project li { margin-bottom: 6px; }
+  .project-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .stack-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stack-tag {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: rgba(217, 164, 65, 0.12);
+    border: 1px solid var(--accent-dim);
+    border-radius: 3px;
+    padding: 4px 10px;
+  }
+  .repo-link {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--steel);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .repo-link:hover { color: var(--accent); }
+
+  .edu-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+  .edu-meta { color: var(--text-secondary); font-size: 14.5px; margin: 0; }
+
+  .contact-list { display: flex; flex-direction: column; gap: 10px; }
+  .contact-line {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
+    font-size: 15px;
+    align-items: center;
+  }
+  .contact-line .k {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+  .contact-line a { color: var(--text-primary); text-decoration: none; border-bottom: 1px solid var(--border-strong); overflow-wrap: anywhere; }
+  .contact-line a:hover { color: var(--accent); border-color: var(--accent); }
+
+  footer {
+    padding: 34px 0 48px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 640px) {
+    .record { grid-template-columns: 1fr; gap: 10px; }
+    h1.name { font-size: 32px; }
+    .contact-line { grid-template-columns: 70px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="netbg" aria-hidden="true"></canvas>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <span><span class="dot">●</span> michael.stolyarov</span>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="wrap hero">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span class="terminal-dot r"></span>
+      <span class="terminal-dot y"></span>
+      <span class="terminal-dot g"></span>
+      <p class="terminal-title">michael@stolyarov: ~/portfolio</p>
+    </div>
+    <div class="terminal-body">
+      <p class="eyebrow">Cybersecurity &amp; software development</p>
+      <h1 class="name">Michael Stolyarov</h1>
+      <p class="role-line" aria-live="polite">
+        <span class="prompt">$</span> whoami --target-role
+        <span id="roleText">SOC Analyst</span><span class="cursor" aria-hidden="true"></span>
+      </p>
+      <p class="tagline">
+        Computer Science &amp; Mathematics student focused on cybersecurity and
+        software development, with hands-on projects in SOC analysis,
+        detection rules, and application security.
+      </p>
+      <div class="status-pill">Open to SOC, detection engineering &amp; software development roles</div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#work">View selected work</a>
+        <a class="btn btn-ghost" href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="record" id="profile">
+    <h2>Profile</h2>
+    <p class="record-label" aria-hidden="true">Profile</p>
+    <div class="bio">
+      <p>
+        I'm a Computer Science and Mathematics student at
+        <strong>The Netanya Academic College</strong>, splitting my time
+        between building software and figuring out how it fails. My SOC
+        home lab runs on Wazuh and Sysmon, where I write detection rules,
+        correlate raw telemetry across Windows and Linux, and document
+        evidence-based verdicts the way a real investigation report would.
+      </p>
+      <p>
+        C# is my strongest programming language. I practice object-oriented
+        design through applications and exercises involving inheritance,
+        polymorphism, collections, and clear class responsibilities. When I
+        get stuck, I use AI for explanations and guidance, then work through
+        the reasoning myself.
+      </p>
+    </div>
+  </section>
+
+  <section class="record" id="capabilities">
+    <h2>Capabilities</h2>
+    <p class="record-label" aria-hidden="true">Capabilities</p>
+    <div>
+      <div class="skill-group">
+        <p class="skill-group-title">Security &amp; detection</p>
+        <div class="tag-row">
+          <span class="tag">Wazuh SIEM</span><span class="tag">Sysmon</span>
+          <span class="tag">Windows Event Logs</span><span class="tag">Microsoft Defender</span>
+          <span class="tag">Wireshark</span><span class="tag">MITRE ATT&amp;CK</span>
+          <span class="tag">OWASP ZAP</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Investigation</p>
+        <div class="tag-row">
+          <span class="tag">Alert triage</span><span class="tag">Log correlation</span>
+          <span class="tag">Threat hunting</span><span class="tag">False-positive analysis</span>
+          <span class="tag">Rule tuning</span><span class="tag">Incident documentation</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Development</p>
+        <div class="tag-row">
+          <span class="tag">C#</span><span class="tag">Object-oriented programming</span><span class="tag">PowerShell</span><span class="tag">Git</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Operating systems</p>
+        <div class="tag-row">
+          <span class="tag">Windows</span><span class="tag">Linux</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-title">Networking fundamentals</p>
+        <div class="tag-row">
+          <span class="tag">TCP/IP</span><span class="tag">DNS</span><span class="tag">HTTP/HTTPS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="record" id="work">
+    <h2>Selected work</h2>
+    <p class="record-label" aria-hidden="true">Selected work</p>
+    <div class="project-list">
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">SOC detection engineering home lab</h3>
+          <span class="cat-tag">Security</span>
+        </div>
+        <ul>
+          <li>A Wazuh and Sysmon lab where each controlled attack scenario gets a custom detection rule, rule testing, and an incident-style report with evidence, a verdict and detection limitations. Scenarios include SSH password guessing, PowerShell execution, persistence and service creation.</li>
+          <li>Featured investigation: a scheduled task that launches PowerShell. I correlated the task definition (Event 4698), Task Scheduler execution logs and Sysmon process and file events through the ProcessGuid, compared baseline, elevated and hidden variants, and concluded benign while stating what the evidence does not prove.</li>
+          <li>Findings are mapped to MITRE ATT&amp;CK as behavioral context, not as proof of malicious intent.</li>
+        </ul>
+        <a class="featured-link" href="https://github.com/stateOfMindset/soc-home-lab/blob/main/incident-reports/009-Scheduled-Task-PowerShell.md">→ Read the scheduled-task investigation</a>
+        <div class="project-footer">
+          <div class="stack-row">
+            <span class="stack-tag">Wazuh</span><span class="stack-tag">Sysmon</span>
+            <span class="stack-tag">Windows</span><span class="stack-tag">Linux</span>
+            <span class="stack-tag">PowerShell</span><span class="stack-tag">MITRE ATT&amp;CK</span>
+          </div>
+          <a class="repo-link" href="https://github.com/stateOfMindset/soc-home-lab">→ github.com/stateOfMindset/soc-home-lab</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">PhishCheck — phishing triage assistant</h3>
+          <span class="cat-tag">Security + software</span>
+        </div>
+        <ul>
+          <li>A course prototype for Practical Generative AI, built extensively with an AI coding assistant. Flask, PostgreSQL, and the HTML/JavaScript frontend were course requirements; AI proposed much of the remaining implementation. It uses sample procedures written for the project, not official college policy.</li>
+          <li>Designed for a student with a suspicious message: paste a message, link or email headers, describe what happened, and get the matching steps for that situation.</li>
+          <li>A router chooses per message between inspecting it with tools, retrieving a documented procedure, or answering directly, and shows its reasoning.</li>
+          <li>Two rule-based analyzers check pasted links and email headers for lookalike domains, display-name spoofing and failed authentication. They only read the text and never visit a URL.</li>
+          <li>The assistant is instructed to keep what the user reported, what the tools found, and what remains uncertain separate, and to avoid declaring a message safe.</li>
+        </ul>
+        <div class="project-footer">
+          <div class="stack-row">
+            <span class="stack-tag">Python</span><span class="stack-tag">Flask</span>
+            <span class="stack-tag">RAG</span><span class="stack-tag">LLM tool use</span>
+            <span class="stack-tag">LangChain</span><span class="stack-tag">pgvector</span>
+            <span class="stack-tag">PostgreSQL</span><span class="stack-tag">Docker</span>
+          </div>
+          <a class="repo-link" href="https://github.com/stateOfMindset/phishcheck">→ github.com/stateOfMindset/phishcheck</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">Screenshot AI — Hebrew OCR &amp; answer retrieval</h3>
+          <span class="cat-tag">Software</span>
+        </div>
+        <ul>
+          <li>Windows desktop tool that captures a screen region and extracts Hebrew text locally with Tesseract OCR.</li>
+          <li>Normalizes output and searches an SQLite FTS5 dataset with fuzzy candidate ranking.</li>
+          <li>Python utilities convert source material into structured JSON for the search index.</li>
+        </ul>
+        <div class="project-footer">
+          <div class="stack-row">
+            <span class="stack-tag">C#</span><span class="stack-tag">WinForms</span>
+            <span class="stack-tag">Tesseract OCR</span><span class="stack-tag">SQLite</span>
+            <span class="stack-tag">Python</span>
+          </div>
+          <a class="repo-link" href="https://github.com/stateOfMindset/Project_screenshot_ai">→ github.com/stateOfMindset/Project_screenshot_ai</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">Secure social platform</h3>
+          <span class="cat-tag">Security + software</span>
+        </div>
+        <ul>
+          <li>Built a Twitter-style social platform with a focus on secure SDLC and usable design.</li>
+          <li>Used OWASP ZAP and manual testing to find and patch vulnerabilities.</li>
+          <li>Authored an audit report covering findings, exploit vectors, fixes and recommendations; added system-wide auth logging for incident response.</li>
+        </ul>
+        <div class="project-footer">
+          <div class="stack-row">
+            <span class="stack-tag">C#</span><span class="stack-tag">OWASP ZAP</span>
+            <span class="stack-tag">Secure SDLC</span>
+          </div>
+          <a class="repo-link" href="https://github.com/stateOfMindset/social-media">→ github.com/stateOfMindset/social-media</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">Stock exchange simulator</h3>
+          <span class="cat-tag">Software</span>
+        </div>
+        <ul>
+          <li>Android app built in .NET MAUI with an MVVM structure: view models, services and models, with separate navigation for signed-in and signed-out users.</li>
+          <li>Pulls daily prices from a market data API and draws them on a custom-built chart with selectable time ranges and side-by-side ticker comparison.</li>
+          <li>Users register, trade from a virtual starting balance and track a portfolio and transaction history stored in Firebase.</li>
+          <li>Includes an experimental Gemini-based price projection with a fallback when the model is unavailable.</li>
+        </ul>
+        <div class="project-footer">
+          <div class="stack-row">
+            <span class="stack-tag">C#</span><span class="stack-tag">.NET MAUI</span>
+            <span class="stack-tag">MVVM</span><span class="stack-tag">Firebase</span>
+          </div>
+          <a class="repo-link" href="https://github.com/stateOfMindset/ProjectCompScience">→ github.com/stateOfMindset/ProjectCompScience</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="record" id="education">
+    <h2>Education</h2>
+    <p class="record-label" aria-hidden="true">Education</p>
+    <div>
+      <p class="edu-title">The Netanya Academic College</p>
+      <p class="edu-meta">B.Sc. Computer Science &amp; Mathematics — expected 2028</p>
+    </div>
+  </section>
+
+  <section class="record" id="contact">
+    <h2>Contact</h2>
+    <p class="record-label" aria-hidden="true">Contact</p>
+    <div class="contact-list">
+      <div class="contact-line">
+        <span class="k">EMAIL</span>
+        <a href="mailto:michaelstolyaro@gmail.com">michaelstolyaro@gmail.com</a>
+      </div>
+      <div class="contact-line">
+        <span class="k">GITHUB</span>
+        <a href="https://github.com/stateOfMindset">github.com/stateOfMindset</a>
+      </div>
+      <div class="contact-line">
+        <span class="k">LINKEDIN</span>
+        <a href="https://linkedin.com/in/michael-stolyarov-b52a76373">linkedin.com/in/michael-stolyarov</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  © Michael Stolyarov
+</footer>
+
+<script>
+  (function () {
+    var canvas = document.getElementById("netbg");
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext("2d");
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var nodes = [], w = 0, h = 0, dpr = 1, raf = 0;
+    var LINK = 150;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var count = Math.max(24, Math.min(70, Math.round((w * h) / 24000)));
+      nodes = [];
+      for (var i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.28,
+          vy: (Math.random() - 0.5) * 0.28,
+          hot: i % 11 === 0
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      var i, j, a, b, dx, dy, d, alpha;
+      for (i = 0; i < nodes.length; i++) {
+        a = nodes[i];
+        for (j = i + 1; j < nodes.length; j++) {
+          b = nodes[j];
+          dx = a.x - b.x;
+          dy = a.y - b.y;
+          d = Math.sqrt(dx * dx + dy * dy);
+          if (d < LINK) {
+            alpha = (1 - d / LINK) * 0.16;
+            ctx.strokeStyle = (a.hot || b.hot)
+              ? "rgba(217,164,65," + alpha + ")"
+              : "rgba(124,147,184," + alpha + ")";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      for (i = 0; i < nodes.length; i++) {
+        a = nodes[i];
+        ctx.fillStyle = a.hot ? "rgba(217,164,65,0.55)" : "rgba(124,147,184,0.4)";
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, a.hot ? 2.2 : 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function step() {
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      }
+      draw();
+      raf = requestAnimationFrame(step);
+    }
+
+    resize();
+    draw();
+    window.addEventListener("resize", function () {
+      resize();
+      draw();
+    });
+    if (!reduced) {
+      raf = requestAnimationFrame(step);
+      document.addEventListener("visibilitychange", function () {
+        cancelAnimationFrame(raf);
+        if (!document.hidden) raf = requestAnimationFrame(step);
+      });
+    }
+  })();
+</script>
+
+<script>
+  (function () {
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (!a) return;
+      var id = a.getAttribute("href").slice(1);
+      var el = id ? document.getElementById(id) : null;
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      try { history.replaceState(null, "", "#" + id); } catch (err) {}
+    });
+  })();
+</script>
+
+<script>
+  (function () {
+    var roles = ["SOC Analyst", "Software Developer", "Detection Engineer", "C# Developer", "Security Researcher"];
+    var el = document.getElementById("roleText");
+    if (!el) return;
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      el.textContent = roles.join(" / ");
+      return;
+    }
+    var i = 0, charIndex = 0, deleting = false;
+    function tick() {
+      var word = roles[i];
+      if (!deleting) {
+        charIndex++;
+        el.textContent = word.slice(0, charIndex);
+        if (charIndex === word.length) {
+          deleting = true;
+          setTimeout(tick, 1400);
+          return;
+        }
+      } else {
+        charIndex--;
+        el.textContent = word.slice(0, charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          i = (i + 1) % roles.length;
+        }
+      }
+      setTimeout(tick, deleting ? 40 : 70);
+    }
+    setTimeout(tick, 900);
+  })();
+</script>
+
+</body>
+</html>
